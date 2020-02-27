@@ -3,7 +3,7 @@
 # info: search for available commands
 #
 # This function searches for available Hestia Control Panel commands
-# and returns results based on the specified criteria.
+# that contain all the words that has being pass to it as arguments.
 #
 # Originally developed for VestaCP by Federico Krum
 # https://github.com/FastDigitalOceanDroplets/VestaCP/blob/master/files/v-search-command
@@ -30,17 +30,18 @@ SearchPath=`ls -a $HESTIA/bin/ | sort`
 TotalItems=`ls -a $HESTIA/bin/ | sort | wc -l`
 
 for i; do
-    SearchResults=`echo $SearchPath | tr " " "\n" | grep $i`
-    FoundItems=`echo $SearchResults | tr " " "\n" | grep $i | wc -l`
+    SearchPath=`echo $SearchPath | tr " " "\n" | grep $i`
 done
 
-if [ -z "$SearchResults" ]; then
+FoundItems=`echo $SearchPath | tr " " "\n" | grep $i | wc -l`
+
+if [ -z "$SearchPath" ]; then
     echo "No available commands were found matching the specified criteria."
     echo "There are a total of $TotalItems commands available."
 else
     echo "Command Search Results"
     echo "================================="
-    echo $SearchResults | tr " " "\n"
+    echo $SearchPath | tr " " "\n"
     echo "================================="
     echo "Found $FoundItems matching items in $TotalItems commands."
 fi
